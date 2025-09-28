@@ -46,61 +46,49 @@ int main() {
  * TODO: make them tail recursive :)
 *******************************************************************************/
 
-unsigned fact(unsigned n) {
-    // base cases (combined)
-    if (n <= 1) {
-        return 1;
-    }
+unsigned factHelper(unsigned n, unsigned acc) {
+    if (n <= 1) return acc;
+    return factHelper(n - 1, acc * n);
+}
 
-    // recursive case
-    unsigned res = fact(n - 1);
-    return res * n;
+unsigned fact(unsigned n) {
+    return factHelper(n, 1);
+}
+
+unsigned fibHelper(unsigned n, unsigned a, unsigned b) {
+    if (n == 0) return a;
+    if (n == 1) return b;
+    return fibHelper(n - 1, b, a + b);
 }
 
 unsigned fib(unsigned n) {
-    // base case 1
-    if (n == 0) {
-        return 0;
-    }
+    return fibHelper(n, 0, 1);
+}
 
-    // base case 2
-    else if (n == 1) {
-        return 1;
-    }
-
-    // recursive case
-    return fib(n - 1) + fib(n - 2);
+unsigned multHelper(unsigned x, unsigned y, unsigned acc) {
+    if (y == 0) return acc;
+    return multHelper(x, y - 1, acc + x);
 }
 
 unsigned mult(unsigned x, unsigned y) {
-    // base case
-    if (y == 0) {
-        return 0;
-    }
+    return multHelper(x, y, 0);
+}
 
-    // recursive case
-    unsigned res = mult(x, y - 1);
-    return res + x;
+unsigned powerHelper(unsigned x, unsigned y, unsigned acc) {
+    if (y == 0) return acc;
+    return powerHelper(x, y - 1, acc * x);
 }
 
 unsigned power(unsigned x, unsigned y) {
-    // base case
-    if (y == 0) {
-        return 1;
-    }
+    return powerHelper(x, y, 1);
+}
 
-    // recursive case
-    unsigned res = power(x, y - 1);
-    return res * x;
+
+unsigned productHelper(unsigned x, unsigned y, unsigned acc) {
+    if (x > y) return acc;           // when we've passed the end
+    return productHelper(x + 1, y, acc * x);
 }
 
 unsigned product(unsigned x, unsigned y) {
-    // base case
-    if (x == y) {
-        return x;
-    }
-
-    // recursive case
-    unsigned p = product(x + 1, y);
-    return p * x;
+    return productHelper(x, y, 1);
 }
